@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - Soft Videogames{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Welcome to Soft Videogames</h1>
+        <p class="lead">Search for the games of the year 2024 on Steam, in a census way.</p>
+        <a href="{% url 'confirm_load_data' %}" class="btn btn-custom btn-lg">Load data in database</a>
+    </div>
+</div>
+
+<!-- Django Messages -->
+<div class="container mt-4">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<!-- Features Section -->
+<div class="feature-section bg-light py-5 fondito">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 feature-hover">
+                    <div class="card-body">
+                        <img src="{% static 'images/mandito.jpg' %}" alt="controller" class="img-fluid mb-3" style="height: 100px;">
+                        <h5 class="card-title">Organized Games</h5>
+                        <p class="card-text">Search for those games easily with this search engine.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 feature-hover">
+                    <div class="card-body">
+                        <img src="{% static 'images/mentemando.jpg' %}" alt="Data Analysis" class="img-fluid mb-3" style="height: 100px;">
+                        <h5 class="card-title">Smart Analytics</h5>
+                        <p class="card-text">Analyze the prices, dates and developers of the video games.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 feature-hover">
+                    <div class="card-body">
+                        <img src="{% static 'images/megustanlosjuegos.jpg' %}" alt="Integration" class="img-fluid mb-3" style="height: 100px;">
+                        <h5 class="card-title">Personalized recommendations</h5>
+                        <p class="card-text">Test your tastes and find out what games you might like.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* General Styles */
+body {
+    background-color: #f0f0f0; /* Gris claro */
+    color: #ff6600; /* Naranja */
+    font-family: 'Arial', sans-serif; /* Cambia a la tipografía que prefieras */
+}
+
+.fondito {
+    background: url("{% static 'images/fondo.png' %}") no-repeat center center fixed;
+}
+
+/* Hero Section */
+.hero-section {
+    background-color:rgb(0, 47, 97); /* Azul para la banda */
+    padding: 50px 0;
+    color: white; /* Letras blancas */
+}
+
+/* Button Customization */
+.btn-custom {
+    background-color: #28a745; /* Verde */
+    color: #ffffff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-custom:hover {
+    background-color: #1c7430; /* Verde oscuro */
+}
+
+/* Feature Hover Effects */
+.feature-hover {
+    transition: transform 0.3s ease;
+}
+
+.feature-hover:hover {
+    transform: scale(1.05);
+}
+
+/* Title and Text Customization */
+h1, h5 {
+    color:rgb(255, 135, 55); /* Naranja */
+    font-family: 'Verdana', sans-serif; /* Tipografía más llamativa */
+}
+
+p, a {
+    color:rgb(255, 135, 55); /* Naranja */
+    font-family: 'Tahoma', sans-serif;
+}
+</style>
+{% endblock %}

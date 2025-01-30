@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="orange">Search Games by Release Date</h1>
+        <p class="orange">Filter games based on their release date.</p>
+    </div>
+
+    <div class="row">
+        <!-- Search by Date -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title orange">Search by Release Date</h5>
+                    <form method="GET" action="{% url 'search_games_by_date' %}">
+                        <div class="mb-3">
+                            <label for="start_date" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" id="start_date" name="start_date">
+                        </div>
+                        <div class="mb-3">
+                            <label for="end_date" class="form-label">End Date</label>
+                            <input type="date" class="form-control" id="end_date" name="end_date">
+                        </div>
+                        <button type="submit" class="btn btn-custom w-100">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <div class="container mt-5">
+        {% if results %}
+            <h1 class="text-center mb-4 orange">
+                Filtered Games ({{ results|length }})
+            </h1>
+            <div class="row">
+                {% for game in results %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title style="color:rgb(255, 135, 55); font-family: 'Verdana', sans-serif;"">{{ game.title }}</h5>
+                            <p><strong>Description:</strong> {{ game.description }}</p>
+                            <p><strong>Developers:</strong> {{ game.developer }}</p>
+                            <p><strong>Publishers:</strong> {{ game.publisher }}</p>
+                            <p><strong>Release Date:</strong> {{ game.release_date }}</p>
+                            <p><strong>Price:</strong> {{ game.price_steam }}</p>
+                            <p><strong>Rating:</strong> {{ game.rating }}</span>/7 ({{ game.num_reviews }} reviews)</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% elif request.GET %}
+            <div class="col-12">
+                <p class="text-center text-muted">No games found for the specified date range.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: url("{% static 'images/fondo.png' %}") no-repeat center center fixed;
+        background-size: cover;
+    }
+    .card-header {
+        background-color: rgb(0, 47, 97);
+        color: white;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .card-body {
+        padding: 20px;
+        text-align: center;
+    }
+    .card-body p {
+        color:rgb(255, 135, 55);
+    }
+    .orange {
+        color:rgb(255, 135, 55);
+    }
+    .card {
+        width: 400px;
+        background-color: #d3d3d3;
+    }
+    /* Button Customization */
+    .btn-custom {
+        background-color: #28a745; /* Verde */
+        color: #ffffff;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        background-color: #1c7430; /* Verde oscuro */
+    }
+
+    /* Feature Hover Effects */
+    .feature-hover {
+        transition: transform 0.3s ease;
+    }
+
+    .feature-hover:hover {
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}

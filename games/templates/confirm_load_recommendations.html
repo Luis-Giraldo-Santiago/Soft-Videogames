@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container py-5 fondito">
+    <div class="text-center mb-5">
+        <h1 class="display-4" style="color:rgb(255, 135, 55); font-family: 'Verdana', sans-serif;">Search Games Recommenden</h1>
+        <p class="lead" style="color:rgb(255, 135, 55); font-family: 'Tahoma', sans-serif;">Find recommenden games in seconds.</p>
+    </div>
+
+    <div class="search-container mb-4">
+        <form method="GET" action="" class="d-flex justify-content-center">
+            <input 
+                type="text" 
+                name="titulo"
+                class="form-control me-2 w-50 shadow-sm" 
+                placeholder="Enter game title..." 
+                required
+                style="border-color: rgb(255, 135, 55);">
+            <button type="submit" class="btn btn-custom shadow-sm">Search</button>
+        </form>
+    </div>
+
+    {% if error %}
+    <div class="alert alert-warning text-center" role="alert">
+        {{ error }}
+    </div>
+    {% else %}
+        {% if results %}
+            <div class="text-center mb-4">
+                <h2 style="color:rgb(0, 128, 0); font-family: 'Verdana', sans-serif;">Search Results</h2>
+                <p style="color:rgb(255, 135, 55); font-family: 'Tahoma', sans-serif;">We found {{ results|length }} games matching your search.</p>
+            </div>
+            <div class="row">
+                {% for game in results %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm border-0 feature-hover h-100">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color:rgb(255, 135, 55); font-family: 'Verdana', sans-serif;">{{ game.title }}</h5>
+                            <p style="font-family: 'Tahoma', sans-serif;"><strong>Description:</strong> {{ game.description }}</p>
+                            <p style="font-family: 'Tahoma', sans-serif;"><strong>Developers:</strong> {{ game.developer }}</p>
+                            <p style="font-family: 'Tahoma', sans-serif;"><strong>Publishers:</strong> {{ game.publisher }}</p>
+                            <p style="font-family: 'Tahoma', sans-serif;"><strong>Release Date:</strong> {{ game.release_date }}</p>
+                            <p style="font-family: 'Tahoma', sans-serif;"><strong>Price:</strong> {{ game.price_steam }}</p>
+                            <p style="font-family: 'Tahoma', sans-serif;"><strong>Rating:</strong> 
+                                {{ game.rating }}/7 
+                                ({{ game.num_reviews }} reviews)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center mt-5">
+                <p style="color:rgb(255, 135, 55); font-family: 'Tahoma', sans-serif;">Sorry, we couldn't find any games matching your search. Please try again with a different title.</p>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: url("{% static 'images/fondo.png' %}") no-repeat center center fixed;
+        background-size: cover;
+    }
+    .card-header {
+        background-color: rgb(0, 47, 97);
+        color: white;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .card-body {
+        padding: 20px;
+        text-align: center;
+    }
+    .card-body p {
+        color:rgb(255, 135, 55);
+    }
+    .card {
+        width: 400px;
+        background-color: #d3d3d3;
+    }
+    /* Button Customization */
+    .btn-custom {
+        background-color: #28a745; /* Verde */
+        color: #ffffff;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        background-color: #1c7430; /* Verde oscuro */
+    }
+
+    /* Feature Hover Effects */
+    .feature-hover {
+        transition: transform 0.3s ease;
+    }
+
+    .feature-hover:hover {
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}

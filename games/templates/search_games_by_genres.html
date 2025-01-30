@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="orange">Games Search</h1>
+        <p class="orange">Filter games by genres.</p>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-6 offset-md-3">
+            <form method="GET" action="{% url 'search_games_by_genres' %}">
+                <div class="mb-3">
+                    <label for="genres" class="form-label orange">Genres</label>
+                    <input type="text" class="form-control" id="genres" name="genres" 
+                        placeholder="Enter genres, separated by commas" 
+                        value="{{ genres|default:'' }}" 
+                        list="genres-list">
+                    <datalist id="genres-list">
+                        {% for genre in available_genres %}
+                        <option value="{{ genre }}"></option>
+                        {% endfor %}
+                    </datalist>
+                    <div class="form-text">You can type genres or select from the dropdown.</div>
+                </div>
+                <button type="submit" class="btn btn-custom w-100">Search</button>
+            </form>
+        </div>
+    </div>
+
+    {% if error %}
+        <div class="alert alert-danger text-center">
+            <p>{{ error }}</p>
+        </div>
+    {% else %}
+        {% if games %}
+            <h1 class="text-center mb-4 orange">
+                Found Games ({{ games|length }})
+            </h1>
+            <div class="row">
+                {% for game in games %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color:rgb(255, 135, 55); font-family: 'Verdana', sans-serif;">{{ game.title }}</h5>
+                            <p><strong>Description:</strong> {{ game.description }}</p>
+                            <p><strong>Developers:</strong> {{ game.developer }}</p>
+                            <p><strong>Publishers:</strong> {{ game.publisher }}</p>
+                            <p><strong>Release Date:</strong> {{ game.release_date }}</p>
+                            <p><strong>Price:</strong> {{ game.price_steam }}</p>
+                            <p><strong>Rating:</strong> {{ game.rating }} / 7 ({{ game.num_reviews }} reviews)</p>
+                            <p><strong>Genres:</strong></p>
+                            <ul>
+                                {% for genre in game.genres %}
+                                <li> <p>{{ genre }}</p> </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% elif request.GET %}
+            <div class="col-12">
+                <p class="text-center text-muted">No games found matching your criteria.</p>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: url("{% static 'images/fondo.png' %}") no-repeat center center fixed;
+        background-size: cover;
+    }
+    .card-header {
+        background-color: rgb(0, 47, 97);
+        color: white;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .card-body {
+        padding: 20px;
+        text-align: center;
+    }
+    .card-body p {
+        color:rgb(255, 135, 55);
+    }
+    .orange {
+        color:rgb(255, 135, 55);
+    }
+    .card {
+        width: 400px;
+        background-color: #d3d3d3;
+    }
+    /* Button Customization */
+    .btn-custom {
+        background-color: #28a745; /* Verde */
+        color: #ffffff;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        background-color: #1c7430; /* Verde oscuro */
+    }
+
+    /* Feature Hover Effects */
+    .feature-hover {
+        transition: transform 0.3s ease;
+    }
+
+    .feature-hover:hover {
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}

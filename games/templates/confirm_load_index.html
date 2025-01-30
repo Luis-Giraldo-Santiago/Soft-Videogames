@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">Confirm Load Index</div>
+        <div class="card-body">
+            <p>Are you sure you want to load the index? This will overwrite the existing one.</p>
+            <form method="POST" action="{% url 'load_index' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-confirm btn-lg">Confirm</button>
+            </form>
+            <a href="{% url 'home' %}" class="btn btn-cancel btn-lg">Cancel</a>
+        </div>
+    </div>
+</div>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: url("{% static 'images/fondo.png' %}") no-repeat center center fixed;
+        background-size: cover;
+    }
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        width: 100%; /* Ocupa todo el ancho disponible */
+    }
+    .card {
+        width: 400px;
+        background-color: #d3d3d3; /* Fondo gris para la tarjeta */
+    }
+    .card-header {
+        background-color: rgb(0, 47, 97);
+        color: white;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .card-body {
+        padding: 20px;
+        text-align: center;
+    }
+    .card-body p {
+        color:rgb(255, 135, 55); /* Texto del mensaje en naranja */
+    }
+    .btn-confirm {
+        background-color: #28a745;
+        color: white;
+        border-radius: 5px;
+        margin-right: 10px;
+        transition: background-color 0.3s;
+    }
+    .btn-confirm:hover {
+        background-color: #218838; /* Verde más oscuro */
+    }
+    .btn-cancel {
+        background-color: #dc3545;
+        color: white;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    .btn-cancel:hover {
+        background-color: #c82333; /* Rojo más oscuro */
+    }
+</style>
+{% endblock %}
